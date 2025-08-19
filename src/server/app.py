@@ -74,7 +74,6 @@ def get_contracts():
     if not client:
         return jsonify({"msg": f"Cliente com CPF {client_cpf} não encontrado"}), 404
 
-    # Esta é uma lógica de exemplo, pode precisar ser mais sofisticada
     def calculate_contract_details(contract):
         total_amount = sum(inst.amount for inst in contract.installments)
         updated_value = total_amount * 1.10
