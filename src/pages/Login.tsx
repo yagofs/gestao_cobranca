@@ -22,8 +22,8 @@ const Login = () => {
         username,
         password,
       });
-  sessionStorage.setItem('access_token', response.data.access_token);
-  sessionStorage.setItem('username', username);
+  localStorage.setItem('access_token', response.data.access_token);
+  localStorage.setItem('username', username);
       toast.success('Login realizado com sucesso!');
       navigate('/dashboard');
     } catch (error: any) {

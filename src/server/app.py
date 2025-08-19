@@ -17,7 +17,7 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 app.config["JWT_SECRET_KEY"] = os.environ.get(
-    'JWT_SECRET_KEY', 'chave_padrao_JWT')
+    'JWT_SECRET_KEY',  'sua-super-chave-secreta-para-jwt')
 jwt = JWTManager(app)
 
 CORS(app)
@@ -204,7 +204,6 @@ def create_action():
             return jsonify({"msg": f"Contrato {contract_number} para o cliente {client_cpf} não encontrado"}), 404
         contract_id = contract.id
 
-    # Criar a nova ação
     operator_username = get_jwt_identity() or "Operador Desconhecido"
     new_action = Action(
         client_id=client.id,
