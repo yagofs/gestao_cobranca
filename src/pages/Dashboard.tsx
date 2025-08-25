@@ -28,14 +28,12 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  // Recupera o username do localStorage
   const [username, setUsername] = useState<string>("");
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (storedUsername) setUsername(storedUsername);
   }, []);
 
-  // Novos estados para as métricas
   const [totalOverdueValue, setTotalOverdueValue] = useState<number>(0);
   const [totalOverdueInstallments, setTotalOverdueInstallments] = useState<number>(0);
   const [todayActionsCount, setTodayActionsCount] = useState<number>(0);
@@ -129,7 +127,6 @@ const Dashboard = () => {
     }
   ];
 
-  // Tabela unificada de parcelas inadimplentes (interface pode permanecer)
   interface OverdueInstallmentRow {
     id: string;
     clientName: string;
@@ -145,7 +142,6 @@ const Dashboard = () => {
     (a, b) => a.daysOverdue - b.daysOverdue
   );
 
-  // Removido filtro de Status Régua
   const filteredInstallments = sortedInstallments;
 
   if (loading) {
@@ -198,20 +194,16 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {metrics.map((metric, index) => (
             <MetricCard key={index} {...metric} />
           ))}
         </div>
 
-        {/* Tabela única de parcelas inadimplentes */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-foreground">Parcelas Inadimplentes</h2>
             <div className="flex items-center gap-4">
-              {/* Removido filtro de Status Régua */}
-              {/* Removed Area Responsável filter */}
             </div>
           </div>
           <Card className="p-0 bg-card border-border shadow-card">
@@ -227,8 +219,6 @@ const Dashboard = () => {
                   <TableHead className="sticky top-0 z-10 bg-card">Parcela</TableHead>
                   <TableHead className="sticky top-0 z-10 bg-card">Vencimento</TableHead>
                   <TableHead className="sticky top-0 z-10 bg-card">Valor</TableHead>
-                  {/* Removido coluna Status Régua */}
-                  {/* Removed Area Responsável column */}
                   <TableHead className="sticky top-0 z-10 bg-card">Dias em atraso</TableHead>
                 </TableRow>
               </TableHeader>
