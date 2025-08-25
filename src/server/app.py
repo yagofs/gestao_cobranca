@@ -75,15 +75,13 @@ def get_contracts():
         return jsonify({"msg": f"Cliente com CPF {client_cpf} não encontrado"}), 404
 
     contracts_data = [_build_contract_data(contract, client.cpf) for contract in client.contracts]
-    delinquent_contracts = _filter_delinquent_contracts(contracts_data)
-
-    return jsonify(delinquent_contracts)
+    return jsonify(contracts_data)
 
 
 def _build_contract_data(contract, client_cpf):
     total_amount = _calculate_total_amount(contract)
-    overdue_info = _get_overdue_info(contract)
-    status_info = _determine_contract_status(contract, overdue_info)
+    earliest_overdue = _find_earliest_overdue_installment(contract.installments)
+    days_overdue = _calculate_days_overdue_from_installment(earliest_overdue)
     
     return {
         'id': contract.id,
@@ -91,10 +89,10 @@ def _build_contract_data(contract, client_cpf):
         'clientCpf': client_cpf,
         'type': contract.type,
         'installmentValue': total_amount,
-        'dueDate': overdue_info['due_date'],
-        'daysOverdue': overdue_info['days_overdue'],
-        'fineValue': _calculate_fine_value(total_amount, overdue_info['days_overdue']),
-        'status': status_info['status'],
+        'dueDate': earliest_overdue.due_date.isoformat(),
+        'daysOverdue': days_overdue,
+        'fineValue': total_amount * 0.05,
+        'status': 'Em Atraso',
         'updatedValue': total_amount * 1.10,
         'installments': _build_installments_data(contract.installments)
     }
@@ -104,60 +102,13 @@ def _calculate_total_amount(contract):
     return sum(inst.amount for inst in contract.installments)
 
 
-def _get_overdue_info(contract):
+def _find_earliest_overdue_installment(installments):
+    return min(installments, key=lambda x: x.due_date)
+
+
+def _calculate_days_overdue_from_installment(installment):
     current_date = date.today()
-    earliest_overdue = _find_earliest_overdue_installment(contract.installments, current_date)
-    
-    if earliest_overdue:
-        return {
-            'installment': earliest_overdue,
-            'due_date': earliest_overdue.due_date.isoformat(),
-            'days_overdue': (current_date - earliest_overdue.due_date).days
-        }
-    
-    return {
-        'installment': None,
-        'due_date': '',
-        'days_overdue': 0
-    }
-
-
-def _find_earliest_overdue_installment(installments, current_date):
-    overdue_installments = [
-        inst for inst in installments 
-        if inst.due_date < current_date
-    ]
-    
-    if not overdue_installments:
-        return None
-        
-    return min(overdue_installments, key=lambda x: x.due_date)
-
-
-def _determine_contract_status(contract, overdue_info):
-    if overdue_info['days_overdue'] > 0:
-        return {'status': 'overdue'}
-    
-    if _has_recent_installments(contract.installments):
-        return {'status': 'recent'}
-    
-    return {'status': 'Em dia'}
-
-
-def _has_recent_installments(installments):
-    current_date = date.today()
-    
-    for inst in installments:
-        if inst.due_date >= current_date:
-            days_until_due = (inst.due_date - current_date).days
-            if days_until_due <= 30:
-                return True
-    
-    return False
-
-
-def _calculate_fine_value(total_amount, days_overdue):
-    return total_amount * 0.05 if days_overdue > 0 else 0
+    return (current_date - installment.due_date).days
 
 
 def _build_installments_data(installments):
@@ -167,29 +118,11 @@ def _build_installments_data(installments):
         {
             'number': inst.number,
             'dueDate': inst.due_date.isoformat(),
-            'daysOverdue': _calculate_days_overdue(inst.due_date, current_date),
+            'daysOverdue': (current_date - inst.due_date).days,
             'amount': inst.amount
         } 
         for inst in installments
     ]
-
-
-def _calculate_days_overdue(due_date, current_date):
-    return (current_date - due_date).days if due_date < current_date else 0
-
-
-def _filter_delinquent_contracts(contracts_data):
-    return [
-        contract for contract in contracts_data
-        if _is_delinquent_contract(contract)
-    ]
-
-
-def _is_delinquent_contract(contract):
-    if contract['status'] == 'overdue':
-        return True
-        
-    return len(contract['installments']) == 1 and contract['status'] != 'Em dia'
 
 @app.route("/api/register", methods=["POST"])
 def register():
