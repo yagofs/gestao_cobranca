@@ -164,7 +164,6 @@ const ActionConfirmation = () => {
       </header>
 
       <div className="container mx-auto px-6 py-8 space-y-8">
-        {/* Header */}
         <Card className="p-6 bg-gradient-subtle border-0 shadow-card">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
@@ -178,7 +177,6 @@ const ActionConfirmation = () => {
         </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Dados Cliente e Contrato */}
           <div className="space-y-6">
             <h2 className="text-xl font-semibold">Dados do Cooperado</h2>
             

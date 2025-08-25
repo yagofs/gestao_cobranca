@@ -10,7 +10,6 @@ import {
   Phone, 
   FileText, 
   Calendar, 
-  DollarSign,
   AlertCircle,
   CheckCircle2
 } from "lucide-react";
@@ -48,7 +47,6 @@ const Contracts = () => {
   const location = useLocation();
   const selectedClientFromNav = (location.state as { clientName?: string; clientCpf?: string } | undefined) ?? {};
 
-  // Mock data -> Será substituído pelos dados da API
   const [clientInfo, setClientInfo] = useState({
     name: selectedClientFromNav.clientName ?? "",
     cpf: selectedClientFromNav.clientCpf ?? "",
@@ -74,7 +72,6 @@ const Contracts = () => {
           return;
         }
 
-        // Fetch client details
         const clientResponse = await fetch(`http://127.0.0.1:5000/api/client_by_cpf?cpf=${selectedClientFromNav.clientCpf}`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -192,14 +189,6 @@ const Contracts = () => {
       style: 'currency',
       currency: 'BRL'
     }).format(value);
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'overdue': return 'text-destructive';
-      case 'recent': return 'text-yellow-600';
-      default: return 'text-muted-foreground';
-    }
   };
 
   const getStatusIcon = (status: string) => {

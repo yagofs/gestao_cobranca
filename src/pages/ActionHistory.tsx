@@ -38,12 +38,8 @@ const ActionHistory = () => {
     selectedInstallmentDueDate: paramSelectedInstallmentDueDate, 
     clientName: paramClientName, 
     clientCpf: paramClientCpf,
-    contractType: paramContractType,
     installmentValue: paramInstallmentValue,
-    contractDaysOverdue: paramContractDaysOverdue,
-    contractFineValue: paramContractFineValue,
     contractId: paramContractId,
-    installmentNumber: paramInstallmentNumber 
   } = location.state || {};
 
   useEffect(() => {
@@ -57,7 +53,6 @@ const ActionHistory = () => {
           return;
         }
 
-        // 1. Buscar dados do cliente pelo CPF
         const clientResponse = await axios.get(`http://localhost:5000/api/client_by_cpf?cpf=${paramClientCpf}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -69,7 +64,6 @@ const ActionHistory = () => {
         const fetchedClient = clientResponse.data;
         setClientData(fetchedClient);
 
-        // 2. Buscar contratos do cliente para encontrar o contrato selecionado e seus detalhes
         const contractsResponse = await axios.get(`http://localhost:5000/api/contracts?cpf=${fetchedClient.cpf}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -87,7 +81,6 @@ const ActionHistory = () => {
           });
         }
 
-        // 3. Buscar histórico de ações para este cliente, filtrando por contrato e parcela
         let actionsUrl = `http://localhost:5000/api/actions/${fetchedClient.id}`;
         const queryParams = [];
         if (paramContractId) {
@@ -185,7 +178,6 @@ const ActionHistory = () => {
       </header>
 
       <div className="container mx-auto px-6 py-8 space-y-8">
-        {/* Client and Contract Info Header */}
         <Card className="p-6 bg-gradient-subtle border-0 shadow-card">
           <div className="space-y-4">
             <h1 className="text-2xl font-bold text-foreground">Histórico e Registro de Ação</h1>
@@ -241,17 +233,19 @@ const ActionHistory = () => {
               <Clock className="w-5 h-5 text-primary" />
               Histórico de Ações
             </h2>
-            
             <div className="space-y-4">
-              {loading ? (
-                <p>Carregando histórico de ações...</p>
-              ) : error ? (
-                <p className="text-red-500">{error}</p>
-              ) : actions.length === 0 ? (
-                <p>Nenhum histórico de ações encontrado para este cliente.</p>
-              ) : (
-                actions.map((item) => (
-                  <Card key={item.id} className="p-4 bg-card border-border shadow-card">
+              {(() => {
+                if (loading) {
+                  return <p>Carregando histórico de ações...</p>;
+                }
+                if (error) {
+                  return <p className="text-red-500">{error}</p>;
+                }
+                if (actions.length === 0) {
+                  return <p>Nenhum histórico de ações encontrado para este cliente.</p>;
+                }
+                return actions.map((item, index) => (
+                  <Card key={index} className="p-4 bg-card border-border shadow-card">
                     <div className="space-y-3">
                       <div className="flex items-start justify-between">
                         <div className="space-y-1">
@@ -283,11 +277,10 @@ const ActionHistory = () => {
                       </div>
                     </div>
                   </Card>
-                ))
-              )}
+                ));
+              })()}
             </div>
           </div>
-
           {/* New Action Form */}
           <div className="space-y-6">
             <h2 className="text-xl font-semibold flex items-center gap-2">
