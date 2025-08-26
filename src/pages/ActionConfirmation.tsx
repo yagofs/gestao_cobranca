@@ -8,7 +8,6 @@ import {
   Phone, 
   FileText, 
   Calendar, 
-  Clock,
   MessageSquare,
   CheckCircle2,
   AlertCircle,
