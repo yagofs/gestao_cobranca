@@ -46,6 +46,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Rodar testes e gerar cobertura
+        run: npm test -- --coverage
+
       - name: Analyze with SonarCloud
 
         # You can pin the exact commit or the version.

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1756244440301" clover="3.2.0">
+  <project timestamp="1756244440301" name="All files">
+    <metrics statements="16" coveredstatements="16" conditionals="3" coveredconditionals="2" methods="5" coveredmethods="5" elements="24" coveredelements="23" complexity="0" loc="16" ncloc="16" packages="2" files="3" classes="3"/>
+    <package name="components.ui">
+      <metrics statements="15" coveredstatements="15" conditionals="3" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <file name="accordion.tsx" path="/Users/welita/projetos/TrabalhoES/gestao_cobranca/src/components/ui/accordion.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+      <file name="button.tsx" path="/Users/welita/projetos/TrabalhoES/gestao_cobranca/src/components/ui/button.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="44" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="5" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="lib">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="utils.ts" path="/Users/welita/projetos/TrabalhoES/gestao_cobranca/src/lib/utils.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="17" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
