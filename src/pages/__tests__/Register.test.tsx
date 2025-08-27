@@ -18,6 +18,7 @@ describe('Register page', () => {
     jest.clearAllMocks();
   });
 
+  // Validações do formulário: senhas não batem e senha muito curta disparam erros
   test('shows errors when passwords do not match or are too short', async () => {
     render(<Register />);
 
@@ -27,18 +28,18 @@ describe('Register page', () => {
     const submit = screen.getByRole('button', { name: /Cadastrar Usuário/i });
 
     fireEvent.change(username, { target: { value: 'user1' } });
-    // mismatch
+  // incompatível
     fireEvent.change(password, { target: { value: 'abc123' } });
     fireEvent.change(confirm, { target: { value: 'different' } });
     fireEvent.click(submit);
 
     await waitFor(() => {
-      // toast.error should be called for mismatch (mocked in sonner)
+  // deve chamar toast.error para mismatch (mockado em sonner)
       const sonner = require('sonner');
       expect(sonner.toast.error).toHaveBeenCalled();
     });
 
-    // too short
+  // muito curta
     fireEvent.change(password, { target: { value: '123' } });
     fireEvent.change(confirm, { target: { value: '123' } });
     fireEvent.click(submit);
@@ -49,6 +50,7 @@ describe('Register page', () => {
     });
   });
 
+  // Cadastro com sucesso: envia dados, mostra sucesso e realiza navegação
   test('submits and navigates on success', async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { msg: 'OK' } });
     render(<Register />);
@@ -65,5 +67,18 @@ describe('Register page', () => {
       expect(sonner.toast.success).toHaveBeenCalled();
       expect(mockNavigate).toHaveBeenCalledWith('/');
     });
+  });
+
+  // Submissão direta do formulário com senhas diferentes dispara erro
+  test('shows error when passwords do not match (direct submit)', () => {
+    const { container } = render(<Register />);
+    fireEvent.change(screen.getByLabelText('Nome de usuário'), { target: { value: 'u1' } });
+    fireEvent.change(screen.getByLabelText('Senha'), { target: { value: '123456' } });
+    fireEvent.change(screen.getByLabelText('Confirmar senha'), { target: { value: 'abcdef' } });
+    const form = container.querySelector('form');
+    expect(form).not.toBeNull();
+    if (form) fireEvent.submit(form);
+    const sonner = require('sonner');
+    expect(sonner.toast.error).toHaveBeenCalled();
   });
 });

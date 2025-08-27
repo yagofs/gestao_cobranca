@@ -32,7 +32,7 @@ Notas técnicas importantes
 
 Arquivos adicionados/modificados
 
-- Adicionados: 8 arquivos de teste (um por página) e `TESTS_ADDED.md` com esta documentação.
+- Adicionados: 8 arquivos de teste (um por página) e `Testes_Doc.md` com esta documentação.
 - Modificados: ajustes pontuais nos próprios testes para melhorar confiabilidade (pequenas mudanças nos testes para garantir que o token esteja presente quando necessário).
 
 Se quiser, posso:

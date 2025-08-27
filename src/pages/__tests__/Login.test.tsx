@@ -15,6 +15,7 @@ jest.mock('react-router-dom', () => ({
 describe('Login page', () => {
   beforeEach(() => jest.clearAllMocks());
 
+  // Testa fluxo de login bem-sucedido: envia credenciais, recebe token, mostra sucesso e navega
   test('renders and performs login flow', async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { access_token: 'tok' } });
     render(<Login />);
@@ -29,6 +30,18 @@ describe('Login page', () => {
       const sonner = require('sonner');
       expect(sonner.toast.success).toHaveBeenCalled();
       expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+    });
+  });
+
+  // Simula falha de autenticação e verifica que aparece mensagem de erro
+  test('shows error on failed login', async () => {
+    mockedAxios.post.mockRejectedValueOnce({ response: { data: { msg: 'Invalid' } } });
+    const { default: LoginComp } = await import('../Login');
+    render(<LoginComp />);
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+    await waitFor(() => {
+      const sonner = require('sonner');
+      expect(sonner.toast.error).toHaveBeenCalled();
     });
   });
 });
