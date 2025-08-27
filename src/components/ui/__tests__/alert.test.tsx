@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Alert } from "./alert";
+import { Alert } from "../alert";
 import '@testing-library/jest-dom';
 
 describe("Alert", () => {

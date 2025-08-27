@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
-} from "./dialog";
+} from "../dialog";
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
 

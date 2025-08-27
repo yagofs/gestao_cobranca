@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "./accordion";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "../accordion";
 import '@testing-library/jest-dom';
 
 describe("Accordion", () => {

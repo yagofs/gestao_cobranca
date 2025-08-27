@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { AspectRatio } from "./aspect-ratio";
+import { AspectRatio } from "../aspect-ratio";
 import '@testing-library/jest-dom';
 
 describe("AspectRatio", () => {
