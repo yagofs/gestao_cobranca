@@ -42,3 +42,13 @@ Se quiser, posso:
 
 ---
 Ficou alguma dúvida? Posso rodar os testes de novo e subir a cobertura até o máximo possível conforme sua meta.
+
+## Testes de componentes UI
+
+- `src/components/ui/__tests__/table.test.tsx`: verifica renderização da estrutura da tabela (header/body/caption).
+- `src/components/ui/__tests__/menubar.test.tsx`: verifica que o menubar abre ao clicar no trigger e exibe itens.
+- `src/components/ui/__tests__/metric-card.test.tsx`: valida título, valor, icon, subtitle e trend.
+- `src/components/ui/__tests__/checkbox.test.tsx`: simula clique e verifica callback `onCheckedChange`.
+- `src/components/ui/__tests__/label.test.tsx`: garante que o texto passado como children aparece.
+
+Todos os testes são unitários e não fazem chamadas externas ao backend.
