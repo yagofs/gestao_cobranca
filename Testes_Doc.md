@@ -24,25 +24,6 @@ Como rodar os testes
 - Rode `npm test` na pasta do projeto. O comando já está configurado para usar o Jest.
 - O Jest também gera um relatório de "cobertura" (coverage) em `coverage/` mostrando quantas linhas do código foram testadas.
 
-Notas técnicas importantes
-
-- Eu usei bibliotecas que já existem no projeto (Jest e @testing-library/react) para criar esses testes.
-- Os arquivos de teste usam 'mocks' para simular respostas do servidor. Isso faz com que os testes sejam rápidos e previsíveis.
-- Os testes não alteram seu código de produção; só adicionam arquivos novos na pasta `src/pages/__tests__/`.
-
-Arquivos adicionados/modificados
-
-- Adicionados: 8 arquivos de teste (um por página) e `Testes_Doc.md` com esta documentação.
-- Modificados: ajustes pontuais nos próprios testes para melhorar confiabilidade (pequenas mudanças nos testes para garantir que o token esteja presente quando necessário).
-
-Se quiser, posso:
-- Adicionar tipos de teste para remover avisos no TypeScript (por exemplo `@types/jest`).
-- Ajustar os testes para rodarem isolados (ex.: rodar apenas os testes de `pages`).
-- Aumentar a cobertura adicionando testes para os componentes UI que hoje não estão cobertos.
-
----
-Ficou alguma dúvida? Posso rodar os testes de novo e subir a cobertura até o máximo possível conforme sua meta.
-
 ## Testes de componentes UI
 
 - `src/components/ui/__tests__/table.test.tsx`: verifica renderização da estrutura da tabela (header/body/caption).
