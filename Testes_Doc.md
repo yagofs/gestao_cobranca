@@ -1,8 +1,8 @@
-Resumo das alterações (linguagem simples)
+Resumo das alterações
 
 O que foi criado
 
-- Criei testes automáticos (chamados "testes unitários") para todas as páginas dentro da pasta `src/pages`.
+- Testes automáticos (chamados "testes unitários") para todas as páginas dentro da pasta `src/pages`.
 - Os novos testes ficam em `src/pages/__tests__/` e cobrem as seguintes páginas:
   - `Register.tsx` -> `Register.test.tsx`
   - `NotFound.tsx` -> `NotFound.test.tsx`
@@ -13,7 +13,7 @@ O que foi criado
   - `ActionHistory.tsx` -> `ActionHistory.test.tsx`
   - `ActionConfirmation.tsx` -> `ActionConfirmation.test.tsx`
 
-O que os testes fazem (explicação simples)
+O que os testes fazem
 
 - Eles abrem virtualmente cada página como se fosse o navegador.
 - Para funções que falam com o servidor (por exemplo `axios` ou `fetch`) eu criei versões falsas chamadas "mocks" — isso impede que os testes realmente toquem seu servidor local.
