@@ -1,32 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# This workflow helps you trigger a SonarCloud analysis of your code and populates
-# GitHub Code Scanning alerts with the vulnerabilities found.
-# Free for open source project.
-
-# 1. Login to SonarCloud.io using your GitHub account
-
-# 2. Import your project on SonarCloud
-#     * Add your GitHub organization first, then add your repository as a new project.
-#     * Please note that many languages are eligible for automatic analysis,
-#       which means that the analysis will start automatically without the need to set up GitHub Actions.
-#     * This behavior can be changed in Administration > Analysis Method.
-#
-# 3. Follow the SonarCloud in-product tutorial
-#     * a. Copy/paste the Project Key and the Organization Key into the args parameter below
-#          (You'll find this information in SonarCloud. Click on "Information" at the bottom left)
-#
-#     * b. Generate a new token and add it to your Github repository's secrets using the name SONAR_TOKEN
-#          (On SonarCloud, click on your avatar on top-right > My account > Security
-#           or go directly to https://sonarcloud.io/account/security/)
-
-# Feel free to take a look at our documentation (https://docs.sonarcloud.io/getting-started/github/)
-# or reach out to our community forum if you need some help (https://community.sonarsource.com/c/help/sc/9)
-
-name: SonarCloud analysis
+name: SonarCloud analysis + Testes Funcionais
 
 on:
   push:
@@ -36,41 +8,86 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+  pull-requests: read
 
 jobs:
   Analysis:
     runs-on: ubuntu-latest
+    env:
+      FRONTEND_URL: http://localhost:8080
+      BACKEND_URL: http://127.0.0.1:5000
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Instalar dependências
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências do frontend
         run: npm ci
 
-      - name: Rodar testes e gerar cobertura
+      - name: Build frontend
+        run: npm run build
+
+      - name: Servir frontend estático na porta 8080 (ajuste se necessário)
+        run: npx serve -s dist -l 8080 &
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências Python
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pytest pytest-cov
+
+      - name: Start backend (AJUSTE o comando para o seu Flask)
+        run: |
+          # Substitua pelo comando real que inicia seu backend no CI
+          python -u src/server/app.py &
+
+      - name: Aguarda frontend/backend responderem
+        run: |
+          timeout=90
+          until curl -sSf "${FRONTEND_URL}/" >/dev/null || [ $timeout -le 0 ]; do sleep 1; timeout=$((timeout-1)); done
+          if [ $timeout -le 0 ]; then echo "Frontend não respondeu"; exit 1; fi
+          timeout=60
+          until curl -sSf "${BACKEND_URL}/" >/dev/null || [ $timeout -le 0 ]; do sleep 1; timeout=$((timeout-1)); done
+          if [ $timeout -le 0 ]; then echo "Backend não respondeu"; exit 1; fi
+
+      - name: Rodar testes JS (jest) e gerar coverage
         run: npm test -- --coverage
 
-      - name: Analyze with SonarCloud
+      - name: Rodar testes funcionais Python (pytest) e gerar relatórios
+        run: |
+          mkdir -p reports coverage
+          pytest tests/functional --junitxml=reports/junit.xml --cov=src --cov-report=xml:coverage/coverage.xml -q
 
-        # You can pin the exact commit or the version.
-        # uses: SonarSource/sonarcloud-github-action@v2.2.0
-        uses: SonarSource/sonarcloud-github-action@4006f663ecaf1f8093e8e4abb9227f6041f52216
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
+      - name: Upload dos relatórios (artifacts)
+        uses: actions/upload-artifact@v4
         with:
-          # Additional arguments for the SonarScanner CLI
-          args:
-            # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
-            # mandatory
+          name: functional-test-reports
+          path: |
+            reports/junit.xml
+            coverage/coverage.xml
+            coverage/lcov.info || true
+
+      - name: Analyze with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
             -Dsonar.projectKey=yagofs_gestao_cobranca
             -Dsonar.organization=yagofs
             -Dsonar.sources=src
-            # Comma-separated paths to directories containing main source files.
-            # Comma-separated paths to directories containing test source files.
-            #-Dsonar.tests= # optional. For more info about Code Coverage, please refer to https://docs.sonarcloud.io/enriching/test-coverage/overview/
-            # Adds more detail to both client and server-side analysis logs, activating DEBUG mode for the scanner, and adding client-side environment variables and system properties to the server-side log of analysis report processing.
-            #-Dsonar.verbose= # optional, default is false
-          # When you need the analysis to take place in a directory other than the one from which it was launched, default is .
+            -Dsonar.tests=tests/functional
+            -Dsonar.junit.reportPaths=reports/junit.xml
+            -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
           projectBaseDir: .
