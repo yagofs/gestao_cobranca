@@ -33,7 +33,7 @@ jobs:
       - name: Build frontend
         run: npm run build
 
-      - name: Servir frontend estático na porta 8080 (ajuste se necessário)
+      - name: Servir frontend estático na porta 8080
         run: npx serve -s dist -l 8080 &
 
       - name: Setup Python
@@ -47,7 +47,7 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install pytest pytest-cov
 
-      - name: Start backend (AJUSTE o comando para o seu Flask)
+      - name: Start backend 
         run: |
           # Substitua pelo comando real que inicia seu backend no CI
           python -u src/server/app.py &
@@ -69,7 +69,7 @@ jobs:
           mkdir -p reports coverage
           pytest tests/functional --junitxml=reports/junit.xml --cov=src --cov-report=xml:coverage/coverage.xml -q
 
-      - name: Upload dos relatórios (artifacts)
+      - name: Upload dos relatórios
         uses: actions/upload-artifact@v4
         with:
           name: functional-test-reports
@@ -78,7 +78,7 @@ jobs:
             coverage/coverage.xml
             coverage/lcov.info || true
 
-      - name: Analyze with SonarCloud
+      - name: Análise com SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2.2.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
