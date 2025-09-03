@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -95,17 +95,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -114,7 +112,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from "react"
@@ -122,15 +122,15 @@ import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
 &nbsp;
 import { cn } from "@/lib/utils"
 &nbsp;
-const HoverCard = <span class="cstat-no" title="statement not covered" >HoverCardPrimitive.Root</span>
+const HoverCard = HoverCardPrimitive.Root
 &nbsp;
-const HoverCardTrigger = <span class="cstat-no" title="statement not covered" >HoverCardPrimitive.Trigger</span>
+const HoverCardTrigger = HoverCardPrimitive.Trigger
 &nbsp;
-const HoverCardContent = <span class="cstat-no" title="statement not covered" >React.forwardRef&lt;</span>
+const HoverCardContent = React.forwardRef&lt;
   React.ElementRef&lt;typeof HoverCardPrimitive.Content&gt;,
   React.ComponentPropsWithoutRef&lt;typeof HoverCardPrimitive.Content&gt;
-&gt;(<span class="fstat-no" title="function not covered" >({</span> className, align = <span class="branch-0 cbranch-no" title="branch not covered" >"center",</span> sideOffset = <span class="branch-0 cbranch-no" title="branch not covered" >4,</span> ...props }, ref) =&gt; (
-<span class="cstat-no" title="statement not covered" >  &lt;HoverCardPrimitive.Content</span>
+&gt;(({ className, align = "center", sideOffset = 4, ...props }, ref) =&gt; (
+  &lt;HoverCardPrimitive.Content
     ref={ref}
     align={align}
     sideOffset={sideOffset}
@@ -141,7 +141,7 @@ const HoverCardContent = <span class="cstat-no" title="statement not covered" >R
     {...props}
   /&gt;
 ))
-<span class="cstat-no" title="statement not covered" >HoverCardContent.displayName = HoverCardPrimitive.Content.displayName</span>
+HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
 &nbsp;
 export { HoverCard, HoverCardTrigger, HoverCardContent }
 &nbsp;</pre></td></tr></table></pre>
@@ -151,7 +151,7 @@ export { HoverCard, HoverCardTrigger, HoverCardContent }
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-29T18:06:23.639Z
+                at 2025-09-03T22:58:26.515Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
