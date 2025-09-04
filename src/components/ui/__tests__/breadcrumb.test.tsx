@@ -17,4 +17,5 @@ describe("Breadcrumb", () => {
     expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/home");
     expect(screen.getByRole("link", { name: "About" })).toHaveAttribute("href", "/about");
   });
+  
 });

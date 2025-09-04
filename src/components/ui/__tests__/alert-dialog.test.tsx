@@ -1,64 +1,38 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
-} from "../dialog";
-import userEvent from "@testing-library/user-event";
-import '@testing-library/jest-dom';
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction
+} from "../alert-dialog"
 
-describe("Dialog Component", () => {
-  it("deve abrir o Dialog ao clicar no trigger", async () => {
+describe("AlertDialog", () => {
+  it("abre e exibe conteúdo do AlertDialog ao clicar no trigger", async () => {
+    const user = userEvent.setup()
     render(
-      <Dialog>
-        <DialogTrigger>Open Dialog</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Título do Dialog</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>Descrição do Dialog</DialogDescription>
-          <DialogFooter>
-            <DialogClose>Fechar</DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    );
+      <AlertDialog>
+        <AlertDialogTrigger>Open</AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogTitle>Título</AlertDialogTitle>
+          <AlertDialogDescription>Descrição</AlertDialogDescription>
+          <AlertDialogAction>Ok</AlertDialogAction>
+        </AlertDialogContent>
+      </AlertDialog>
+    )
 
-    expect(screen.getByText("Open Dialog")).toBeInTheDocument();
+    // Antes de abrir, o conteúdo não deve estar na tela
+    expect(screen.queryByText("Título")).not.toBeInTheDocument()
+    expect(screen.queryByText("Descrição")).not.toBeInTheDocument()
 
-    await userEvent.click(screen.getByText("Open Dialog"));
+    // Clica para abrir
+    await user.click(screen.getByText("Open"))
 
-    expect(screen.getByText("Título do Dialog")).toBeInTheDocument();
-    expect(screen.getByText("Descrição do Dialog")).toBeInTheDocument();
-    expect(screen.getByText("Fechar")).toBeInTheDocument();
-  });
-
-  it("deve fechar o Dialog ao clicar em Fechar", async () => {
-    render(
-      <Dialog>
-        <DialogTrigger>Open Dialog</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Título do Dialog</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>Descrição do Dialog</DialogDescription>
-          <DialogFooter>
-            <DialogClose>Fechar</DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    );
-
-    await userEvent.click(screen.getByText("Open Dialog"));
-    await userEvent.click(screen.getByText("Fechar"));
-
-    expect(screen.queryByText("Título do Dialog")).not.toBeInTheDocument();
-    expect(screen.queryByText("Descrição do Dialog")).not.toBeInTheDocument();
-  });
-});
+    // Agora o conteúdo deve aparecer
+    expect(screen.getByText("Título")).toBeInTheDocument()
+    expect(screen.getByText("Descrição")).toBeInTheDocument()
+    expect(screen.getByText("Ok")).toBeInTheDocument()
+  })
+})

@@ -1,29 +1,62 @@
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "../dropdown-menu"
+  DropdownMenuTrigger,
+} from '../dropdown-menu';
+import { Button } from '../button';
 
-describe("DropdownMenu", () => {
-  test("abre o menu ao clicar no trigger", async () => {
+describe('DropdownMenu', () => {
+  it('deve exibir o menu de opções ao clicar no gatilho', async () => {
+    const user = userEvent.setup();
     render(
       <DropdownMenu>
-        <DropdownMenuTrigger>Abrir</DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
+          <Button>Abrir Menu</Button>
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Item 1</DropdownMenuItem>
-          <DropdownMenuItem>Item 2</DropdownMenuItem>
+          <DropdownMenuItem>Perfil</DropdownMenuItem>
+          <DropdownMenuItem>Sair</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    )
+    );
 
-    // Clica no trigger usando userEvent (mais realista que fireEvent)
-    await userEvent.click(screen.getByText("Abrir"))
+    expect(screen.queryByText('Perfil')).not.toBeInTheDocument();
 
-    // Agora espera o Item 1 aparecer no portal
-    const item = await screen.findByRole("menuitem", { name: /Item 1/i })
-    expect(item).toBeInTheDocument()
-  })
-})
+    const trigger = screen.getByRole('button', { name: /abrir menu/i });
+    await user.click(trigger);
+
+    expect(await screen.findByText('Perfil')).toBeVisible();
+    expect(screen.getByText('Sair')).toBeVisible();
+  });
+
+  // NOVO TESTE ADICIONADO
+  it('deve chamar uma função ao clicar em um item do menu', async () => {
+    const user = userEvent.setup();
+    const onSelectMock = jest.fn(); // Cria uma função "espiã"
+
+    render(
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button>Abrir Menu</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onSelect={onSelectMock}>Perfil</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+
+    // Abre o menu
+    const trigger = screen.getByRole('button', { name: /abrir menu/i });
+    await user.click(trigger);
+
+    // Encontra e clica no item
+    const menuItem = await screen.findByText('Perfil');
+    await user.click(menuItem);
+
+    // Verifica se a função foi chamada
+    expect(onSelectMock).toHaveBeenCalledTimes(1);
+  });
+});

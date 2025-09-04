@@ -1,24 +1,35 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "../dropdown-menu";
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '../drawer';
 
-describe("DropdownMenu", () => {
-  it("abre o menu ao clicar no trigger", async () => {
+describe('Drawer', () => { 
+  it('renderiza Drawer com título após ser aberto', async () => {
+    const user = userEvent.setup();
     render(
-      <DropdownMenu>
-        <DropdownMenuTrigger>Abrir</DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>Item 1</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Drawer>
+        <DrawerTrigger>Abrir</DrawerTrigger>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Meu Drawer</DrawerTitle>
+          </DrawerHeader>
+        </DrawerContent>
+      </Drawer>
     );
 
-    await userEvent.click(screen.getByText("Abrir"));
-    expect(await screen.findByText("Item 1")).toBeInTheDocument();
+    const openButton = screen.getByRole('button', { name: /abrir/i });
+    
+    // Esta linha precisa do "async" lá em cima para funcionar
+    await user.click(openButton); 
+    
+    // A linha abaixo também precisa do "async"
+    expect(await screen.findByText('Meu Drawer')).toBeInTheDocument();
+    // FIM DO SEU CÓDIGO
+    // =======================================================
   });
 });

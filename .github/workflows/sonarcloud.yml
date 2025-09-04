@@ -63,7 +63,7 @@ jobs:
 
       - name: Rodar testes JS (jest) e gerar coverage
         run: npm test -- --coverage
-
+      
       - name: Rodar testes funcionais Python (pytest) e gerar relatórios
         run: |
           mkdir -p reports coverage
@@ -90,4 +90,5 @@ jobs:
             -Dsonar.tests=tests/functional
             -Dsonar.junit.reportPaths=reports/junit.xml
             -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
           projectBaseDir: .
