@@ -1,0 +1,46 @@
+
+models.Action.__repr__P
+F/Users/welita/projetos/TrabalhoES/gestao_cobranca/src/server/models.pyP P("2*´
+2Q Q(KX
+V
+Q Q(*
+%1"__id*>
+
+__unknown_file ("* 
+models.Action"
+action_typeS
+Q
+Q8 Q(C
+%2"__id*9
+
+__unknown_file (*
+models.Action"
+clientF
+D
+Q8 Q(H
+%3"__id*,
+
+__unknown_file (*
+
+%2"
+nameê
+ç
+Q Q(K
+%4"__concat*
+Q Q(
+
+<Action *
+Q Q(*
+
+%1*
+Q+ Q(7
+ for Client *
+Q8 Q(H
+
+%3*
+QI Q(J
+>"
+Q Q(K
+
+%4B
+models.ActionH
