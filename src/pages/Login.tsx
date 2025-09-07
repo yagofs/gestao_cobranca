@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/ui/logo";
-import { Building2, Shield, Users } from "lucide-react";
 import { toast } from "sonner";
 import axios from 'axios';
 

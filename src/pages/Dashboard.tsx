@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/ui/logo";
 import { MetricCard } from "@/components/ui/metric-card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-  import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   Search, 
   DollarSign, 
