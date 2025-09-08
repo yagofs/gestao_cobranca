@@ -47,6 +47,12 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install pytest pytest-cov
 
+      - name: Rodar testes unitários Python (pytest) e gerar cobertura
+        run: |
+          mkdir -p reports coverage
+          python -m coverage run -m pytest tests/server -q --junitxml=reports/junit-unit.xml
+          python -m coverage xml -o coverage/coverage-unit.xml
+
       - name: Start backend 
         run: |
           # Substitua pelo comando real que inicia seu backend no CI
@@ -78,6 +84,14 @@ jobs:
             coverage/coverage.xml
             coverage/lcov.info || true
 
+      - name: Upload de relatórios de testes unitários
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-reports
+          path: |
+            reports/junit-unit.xml
+            coverage/coverage-unit.xml
+
       - name: Análise com SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2.2.0
         env:
@@ -89,6 +103,6 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.tests=tests/functional
             -Dsonar.junit.reportPaths=reports/junit.xml
-            -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
+            -Dsonar.python.coverage.reportPaths=coverage/coverage-unit.xml,coverage/coverage.xml
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
           projectBaseDir: .
