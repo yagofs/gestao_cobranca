@@ -60,13 +60,15 @@ BreadcrumbLink.displayName = "BreadcrumbLink"
 const BreadcrumbPage = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a">
->(({ className, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => ( // 1. Extraímos 'children' aqui
   <a
     ref={ref}
     aria-current="page"
     className={cn("font-normal text-foreground", className)}
     {...props}
-  />
+  >
+    {children} {/* 2. Renderizamos o conteúdo do link aqui dentro */}
+  </a>
 ))
 BreadcrumbPage.displayName = "BreadcrumbPage"
 

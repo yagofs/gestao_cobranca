@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.76% </span>
+                <span class="strong">79.24% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/52</span>
+                <span class='fraction'>42/53</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">78.43% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>40/50</span>
+                <span class='fraction'>40/51</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -412,7 +412,11 @@
 <a name='L347'></a><a href='#L347'>347</a>
 <a name='L348'></a><a href='#L348'>348</a>
 <a name='L349'></a><a href='#L349'>349</a>
-<a name='L350'></a><a href='#L350'>350</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -527,32 +531,27 @@
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -561,6 +560,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -618,6 +625,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -876,8 +884,11 @@ const ActionConfirmation = () =&gt; {
     <span class="missing-if-branch" title="else path not taken" >E</span>if (!dateString) return '-';
 <span class="cstat-no" title="statement not covered" >    try {</span>
       const date = <span class="cstat-no" title="statement not covered" >new Date(dateString);</span>
+      // A verificação isNaN já lida com datas inválidas sem lançar exceção
 <span class="cstat-no" title="statement not covered" >      return isNaN(date.getTime()) ? '-' : date.toLocaleDateString('pt-BR');</span>
     } catch (e) {
+      // O erro agora é registrado no console para não ser ignorado, corrigindo o aviso do SonarQube.
+<span class="cstat-no" title="statement not covered" >      console.error("Falha ao formatar a data:", e);</span>
 <span class="cstat-no" title="statement not covered" >      return '-';</span>
     }
   };
@@ -966,7 +977,8 @@ const ActionConfirmation = () =&gt; {
                 
                 &lt;div className="space-y-2"&gt;
                   {clientData.phones.map(<span class="fstat-no" title="function not covered" >(p</span>hone, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >                    &lt;div key={index} className="flex items-center gap-3"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                    &lt;div key={phone} className="flex items-center gap-3"&gt;</span>
+                      {/* A chave foi alterada de 'index' para 'phone' para usar um valor único e estável */}
                       &lt;div className="w-10 h-10 bg-accent/50 rounded-lg flex items-center justify-center"&gt;
                         &lt;Phone className="w-5 h-5 text-accent-foreground" /&gt;
                       &lt;/div&gt;
@@ -976,8 +988,8 @@ const ActionConfirmation = () =&gt; {
                           {index === 0 ? 'Telefone Principal' : 'Telefone Secundário'}
                         &lt;/p&gt;
                       &lt;/div&gt;
-                    &lt;/div&gt;
-                  ))}
+                &lt;/div&gt;
+                      ))}
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/Card&gt;
@@ -1117,7 +1129,7 @@ export default ActionConfirmation;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-04T22:54:37.130Z
+                at 2025-09-08T04:02:48.498Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useEffect } from 'react'; 
 import axios from 'axios'; 
 
 const ActionHistory = () => {
@@ -218,7 +217,7 @@ const ActionHistory = () => {
                     <AlertCircle className="w-5 h-5 text-muted-foreground" />
                 </div>
                 <div>
-                    <p className="font-medium text-foreground">{formatCurrency(contractData?.installmentValue + contractData?.fineValue)}</p>
+                    <p className="font-medium text-foreground">{formatCurrency((contractData?.installmentValue || 0) + (contractData?.fineValue || 0))}</p>
                     <p className="text-sm text-muted-foreground">{contractData?.daysOverdue || 0} dias em atraso</p>
                 </div>
               </div>
@@ -244,8 +243,8 @@ const ActionHistory = () => {
                 if (actions.length === 0) {
                   return <p>Nenhum histórico de ações encontrado para este cliente.</p>;
                 }
-                return actions.map((item, index) => (
-                  <Card key={index} className="p-4 bg-card border-border shadow-card">
+                return actions.map((item) => (
+                  <Card key={item.id} className="p-4 bg-card border-border shadow-card">
                     <div className="space-y-3">
                       <div className="flex items-start justify-between">
                         <div className="space-y-1">

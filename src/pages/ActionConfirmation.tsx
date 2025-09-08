@@ -113,8 +113,11 @@ const ActionConfirmation = () => {
     if (!dateString) return '-';
     try {
       const date = new Date(dateString);
+      // A verificação isNaN já lida com datas inválidas sem lançar exceção
       return isNaN(date.getTime()) ? '-' : date.toLocaleDateString('pt-BR');
     } catch (e) {
+      // O erro agora é registrado no console para não ser ignorado, corrigindo o aviso do SonarQube.
+      console.error("Falha ao formatar a data:", e);
       return '-';
     }
   };
@@ -203,7 +206,8 @@ const ActionConfirmation = () => {
                 
                 <div className="space-y-2">
                   {clientData.phones.map((phone, index) => (
-                    <div key={index} className="flex items-center gap-3">
+                    <div key={phone} className="flex items-center gap-3">
+                      {/* A chave foi alterada de 'index' para 'phone' para usar um valor único e estável */}
                       <div className="w-10 h-10 bg-accent/50 rounded-lg flex items-center justify-center">
                         <Phone className="w-5 h-5 text-accent-foreground" />
                       </div>
@@ -213,8 +217,8 @@ const ActionConfirmation = () => {
                           {index === 0 ? 'Telefone Principal' : 'Telefone Secundário'}
                         </p>
                       </div>
-                    </div>
-                  ))}
+                </div>
+                      ))}
                 </div>
               </div>
             </Card>
