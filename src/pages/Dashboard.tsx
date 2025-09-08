@@ -254,10 +254,12 @@ const Dashboard = () => {
               
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-muted-foreground">
+                  <label htmlFor="client-search" className="text-sm font-medium text-muted-foreground">
                     Nome ou CPF do Cooperado
                   </label>
                   <Input
+                    id="client-search"
+                    name="client-search"
                     placeholder="Digite o nome ou CPF..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -267,9 +269,9 @@ const Dashboard = () => {
 
                 {searchQuery && (
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-muted-foreground">
+                    <p className="text-sm font-medium text-muted-foreground">
                       Resultados da Busca
-                    </label>
+                    </p>
                     <div className="space-y-2">
                       {uniqueClients
                         .filter(client => 
@@ -277,13 +279,16 @@ const Dashboard = () => {
                           client.cpf.includes(searchQuery)
                         )
                         .map((client) => (
-                          <div
+                          <button
+                            type="button"
                             key={client.cpf}
-                            className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                            className={`w-full text-left p-3 border rounded-lg cursor-pointer transition-colors ${
                               selectedClient === `${client.name} - ${client.cpf}` 
                                 ? "bg-accent border-primary" 
                                 : "bg-background hover:bg-muted/50"
                             }`}
+                            aria-pressed={selectedClient === `${client.name} - ${client.cpf}`}
+                            title={`Selecionar ${client.name} (${client.cpf})`}
                             onClick={() => setSelectedClient(`${client.name} - ${client.cpf}`)}
                           >
                             <div className="flex justify-between items-start">
@@ -296,7 +301,7 @@ const Dashboard = () => {
                                 <p className="text-xs text-muted-foreground">{client.parcelsCount} parcela(s) em atraso</p>
                               </div>
                             </div>
-                          </div>
+                          </button>
                         ))}
                     </div>
                   </div>
@@ -324,12 +329,16 @@ const Dashboard = () => {
                 {recentActions.length === 0 ? (
                   <p className="text-xs text-muted-foreground">Nenhuma atividade recente encontrada.</p>
                 ) : (
-                  recentActions.map((activity: any, index: number) => (
+                  recentActions.map((activity: any, index: number) => {
+                    const dotColorClass =
+                      activity.type === 'success'
+                        ? 'bg-green-500'
+                        : activity.type === 'info'
+                          ? 'bg-blue-500'
+                          : 'bg-primary';
+                    return (
                     <div key={index} className="flex items-start gap-3 p-3 bg-background rounded-lg">
-                      <div className={`w-2 h-2 rounded-full mt-2 ${
-                        activity.type === 'success' ? 'bg-green-500' : 
-                        activity.type === 'info' ? 'bg-blue-500' : 'bg-primary'
-                      }`} />
+                      <div className={`w-2 h-2 rounded-full mt-2 ${dotColorClass}`} />
                       <div className="flex-1 space-y-1">
                         <div className="flex items-center justify-between">
                           <p className="text-sm font-medium">{activity.actionType}</p>
@@ -338,7 +347,8 @@ const Dashboard = () => {
                         <p className="text-xs text-muted-foreground">{activity.clientName}</p>
                       </div>
                     </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
 
