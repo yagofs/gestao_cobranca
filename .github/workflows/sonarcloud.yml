@@ -82,7 +82,7 @@ jobs:
           path: |
             reports/junit.xml
             coverage/coverage.xml
-            coverage/lcov.info || true
+          if-no-files-found: ignore
 
       - name: Upload de relatórios de testes unitários
         uses: actions/upload-artifact@v4
@@ -91,6 +91,7 @@ jobs:
           path: |
             reports/junit-unit.xml
             coverage/coverage-unit.xml
+            coverage/lcov.info
 
       - name: Análise com SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2.2.0
@@ -101,8 +102,8 @@ jobs:
             -Dsonar.projectKey=yagofs_gestao_cobranca
             -Dsonar.organization=yagofs
             -Dsonar.sources=src
-            -Dsonar.tests=tests/functional
-            -Dsonar.junit.reportPaths=reports/junit.xml
+            -Dsonar.tests=tests
+            -Dsonar.junit.reportPaths=reports/junit.xml,reports/junit-unit.xml
             -Dsonar.python.coverage.reportPaths=coverage/coverage-unit.xml,coverage/coverage.xml
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
           projectBaseDir: .
