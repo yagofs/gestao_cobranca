@@ -136,7 +136,7 @@ def test_registrar_acao_contrato_parcela(driver, base_urls):
 
     # Clicar no resultado do cooperado (texto contém CPF)
     WebDriverWait(driver, 20).until(
-        EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), '123.456.789-01')]/ancestor::div[contains(@class,'p-3')][1]"))
+        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class,'p-3')][.//*[contains(., '123.456.789-01')]]"))
     ).click()
 
     # Prosseguir para Contratos
