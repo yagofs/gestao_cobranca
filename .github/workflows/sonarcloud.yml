@@ -93,6 +93,17 @@ jobs:
             coverage/coverage-unit.xml
             coverage/lcov.info
 
+      - name: Gerar resumo de cobertura total (Python + JS)
+        run: |
+          python scripts/coverage_total.py
+
+      - name: Upload do resumo de cobertura
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-summary
+          path: reports/coverage-summary.txt
+          if-no-files-found: ignore
+
       - name: Análise com SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2.2.0
         env:
