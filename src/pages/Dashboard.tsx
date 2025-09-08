@@ -330,12 +330,12 @@ const Dashboard = () => {
                   <p className="text-xs text-muted-foreground">Nenhuma atividade recente encontrada.</p>
                 ) : (
                   recentActions.map((activity: any, index: number) => {
-                    const dotColorClass =
-                      activity.type === 'success'
-                        ? 'bg-green-500'
-                        : activity.type === 'info'
-                          ? 'bg-blue-500'
-                          : 'bg-primary';
+                    let dotColorClass = 'bg-primary';
+                    if (activity.type === 'success') {
+                      dotColorClass = 'bg-green-500';
+                    } else if (activity.type === 'info') {
+                      dotColorClass = 'bg-blue-500';
+                    }
                     return (
                     <div key={index} className="flex items-start gap-3 p-3 bg-background rounded-lg">
                       <div className={`w-2 h-2 rounded-full mt-2 ${dotColorClass}`} />
